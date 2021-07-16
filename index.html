@@ -128,8 +128,19 @@
         async function Delete(){
             var delWord = document.getElementById("delWord").value;
             if(document.getElementById("code").value == "1236"){
-                await db.collection("paulick").doc(delWord).delete()
-                console.log("deleted");
+                if (delWord.length == 0){
+                    db.collection("paulick")
+                    .get()
+                    .then(res => {
+                        res.forEach(element => {
+                        element.ref.delete();
+                        });
+                    });
+                } else{
+                    await db.collection("paulick").doc(delWord).delete()
+                    console.log("deleted");
+                    location.reload();
+                }
                 location.reload();
             }
         }
