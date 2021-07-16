@@ -11,6 +11,7 @@
                 padding: 0;
             }
         </style>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
         <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
@@ -84,7 +85,7 @@
             var chart = anychart.tagCloud(data);
 
             // set the chart title
-            chart.title('Humanities')
+            chart.title('Science for Entrepreneurship')
             // set array of angles, by which words will be placed
             chart.angles([0, -45, 90])
 
@@ -104,7 +105,7 @@
         }
         async function Send(){
             var input = document.getElementById("command").value;
-            await firebase.firestore().collection("paulick").doc(input).set({
+            await firebase.firestore().collection("science").doc(input).set({
                 field: NaN
             });
             sleep(500);
@@ -116,7 +117,7 @@
         } 
             
         async function getMarkers() {
-            const events = await firebase.firestore().collection("paulick");
+            const events = await firebase.firestore().collection("science");
             await events.get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     data.push({"x": doc.id, "value": 1})
@@ -145,6 +146,9 @@
                 }
                 location.reload();
             }
+        }
+        function Room(){
+            
         }
 
         
