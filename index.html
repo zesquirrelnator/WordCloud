@@ -83,7 +83,7 @@
             var chart = anychart.tagCloud(data);
 
             // set the chart title
-            chart.title('Science for Entrepreneurship')
+            chart.title('Humanities')
             // set array of angles, by which words will be placed
             chart.angles([0, -45, 90])
 
@@ -126,10 +126,10 @@
         //this is so easy to bypass I don't even want to talk about it
 
         async function Delete(){
-            var delWord = document.getElementById("delWord").value;
+            var delWord = await document.getElementById("delWord").value;
             if(document.getElementById("code").value == "1236"){
                 if (delWord.length == 0){
-                    db.collection("paulick")
+                    await db.collection("paulick")
                     .get()
                     .then(res => {
                         res.forEach(element => {
