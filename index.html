@@ -127,6 +127,7 @@
 
         async function Delete(){
             var delWord = await document.getElementById("delWord").value;
+            console.log(delWord.length);
             if(document.getElementById("code").value == "1236"){
                 if (delWord.length == 0){
                     await db.collection("paulick")
@@ -139,7 +140,6 @@
                 } else{
                     await db.collection("paulick").doc(delWord).delete()
                     console.log("deleted");
-                    location.reload();
                 }
                 location.reload();
             }
