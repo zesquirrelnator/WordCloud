@@ -43,10 +43,18 @@
                 <div style="padding-left: 25px; width:300px; display:table" class="form-group">
                     <br>
                     <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="command"
-                        placeholder="word">
-                    <br>
+                    placeholder="word">
                     <button onClick="Send();" type="submit" style="z-index:9999; position:relative"
                         class="btn btn-success">Send</button>
+                    <br>
+                    <br>
+                    <br>
+                    <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="code"
+                    placeholder="code">
+                    <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="delWord"
+                    placeholder="word">
+                    <button onClick="Delete();" type="submit" style="z-index:9999; position:relative"
+                    class="btn btn-success">Delete</button>
                 </div>
             </form>
     
@@ -75,7 +83,7 @@
             var chart = anychart.tagCloud(data);
 
             // set the chart title
-            chart.title('Science for Entrepreneurship')            
+            chart.title('Science for Entrepreneurship')
             // set array of angles, by which words will be placed
             chart.angles([0, -45, 90])
 
@@ -113,6 +121,17 @@
                 })
             })
             createChart();
+        }
+
+        //this is so easy to bypass I don't even want to talk about it
+
+        async function Delete(){
+            var delWord = document.getElementById("delWord").value;
+            if(document.getElementById("code").value == "1236"){
+                await db.collection("paulick").doc(delWord).delete()
+                console.log("deleted");
+                location.reload();
+            }
         }
 
         
