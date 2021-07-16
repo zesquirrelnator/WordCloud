@@ -76,9 +76,10 @@
 
     </body>
     <script>
+        
         const data = []
 
-        function createChart(){
+        async function createChart(){
             // create a tag cloud chart
             var chart = anychart.tagCloud(data);
 
@@ -95,7 +96,8 @@
 
             // display chart
             chart.container("container");
-            chart.draw();
+            await chart.draw();
+            $('.anychart-credits').remove();
         }
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
