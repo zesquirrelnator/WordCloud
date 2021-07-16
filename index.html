@@ -14,21 +14,31 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
         <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
 
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+
+        <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyBQShsnp7K5oN3HU1gPIl-4_NDRMjel2Gg",
+            authDomain: "wordcloud-b7391.firebaseapp.com",
+            projectId: "wordcloud-b7391",
+            storageBucket: "wordcloud-b7391.appspot.com",
+            messagingSenderId: "608300800963",
+            appId: "1:608300800963:web:0f32c76ac18d6bb2c2fb76",
+            measurementId: "G-VN7QGY00L2"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        const db = firebase.firestore();
+        </script>
     </head>
     
     <body>
-        <div style="display:visible" id="joinRoom">
-            <form autocomplete="off" onsubmit="return false">
-                <div style="position: absolute;top: 50%;left: 50%; padding-left: 25px; width:300px; display:table" class="form-group">
-                    <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="RoomNumber"
-                        placeholder="RoomNumber">
-                    <button onClick="Join();" type="submit" style="z-index:9999; position:relative"
-                        class="btn btn-success">Send</button>
-                </div>
-            </form>
-        </div>
-        <div style="display:none" id="wordCloud">
+        <div id="wordCloud">
             <form autocomplete="off" onsubmit="return false">
                 <div style="padding-left: 25px; width:300px; display:table" class="form-group">
                     <br>
@@ -58,86 +68,57 @@
 
     </body>
     <script>
+        const data = []
 
+        function createChart(){
+            // create a tag cloud chart
+            var chart = anychart.tagCloud(data);
 
-        anychart.onDocumentReady(function () {
+            // set the chart title
+            chart.title('Farenheight 451 Characteristics')
+            // set array of angles, by which words will be placed
+            chart.angles([0, -45, 90])
 
-            const data = []
+            // add an event listener
+            chart.listen("pointClick", function(e){
+            var url = "https://en.wikipedia.org/wiki/" + e.point.get("x");
+            window.open(url, "_blank");
+            });
 
-            if (data.length == 0) {
-                getMarkers();
-                console.log(data);
-            } 
-            async function getMarkers() {
-                const events = await firebase.firestore().collection(room)
-                await events.get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        data.push({"x": doc.id, "value": 1})
-                    })
-                })
-                createChart();
-            }
-
-            function createChart(){
-                // create a tag cloud chart
-                var chart = anychart.tagCloud(data);
-
-                // set the chart title
-                chart.title('Farenheight 451 Characteristics')
-                // set array of angles, by which words will be placed
-                chart.angles([0, -45, 90])
-
-                // add an event listener
-                chart.listen("pointClick", function(e){
-                var url = "https://en.wikipedia.org/wiki/" + e.point.get("x");
-                window.open(url, "_blank");
-                });
-
-                // display chart
-                chart.container("container");
-                chart.draw();
-            }
-        });
-
+            // display chart
+            chart.container("container");
+            chart.draw();
+        }
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
         async function Send(){
             var input = document.getElementById("command").value;
-            await db.collection(room).doc(input).set({
+            await firebase.firestore().collection("paulick").doc(input).set({
                 field: NaN
             });
             sleep(500);
             location.reload();
         }
-        function Join(){
-            var room = document.getElementById("RoomNumber").value;
-            $("#joinRoom").toggle();
-            $("#wordCloud").toggle();
+        if (data.length == 0) {
+            getMarkers();
+            console.log(data);
+        } 
+            
+        async function getMarkers() {
+            const events = await firebase.firestore().collection("paulick");
+            await events.get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    data.push({"x": doc.id, "value": 1})
+                })
+            })
+            createChart();
         }
+
+        
     </script>
 
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
-
-    <script>
-    var firebaseConfig = {
-        apiKey: "AIzaSyBQShsnp7K5oN3HU1gPIl-4_NDRMjel2Gg",
-        authDomain: "wordcloud-b7391.firebaseapp.com",
-        projectId: "wordcloud-b7391",
-        storageBucket: "wordcloud-b7391.appspot.com",
-        messagingSenderId: "608300800963",
-        appId: "1:608300800963:web:0f32c76ac18d6bb2c2fb76",
-        measurementId: "G-VN7QGY00L2"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    const db = firebase.firestore();
-    </script>
+    
 </body>
 
 </html>
