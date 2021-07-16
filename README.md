@@ -1,10 +1,10 @@
 # zesquirrelnator.github.io
 WordCloud for LVSS
 
-#Introduction
+# Introduction
 
 This repository is a basic wordcloud made with anychart and firestore. This is accessible for the LawrenceVille Summer School (LVSS). 
 
-#Usage 
+# Usage 
 
 It's simple! Just go to https://zesquirrelnator.github.io/. 
