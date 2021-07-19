@@ -73,7 +73,6 @@
             window.location.href = "index.html"
         }
         async function getMarkers() {
-            
             $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/getData?room=" + Cookies.get("Room"), await function (data) {
                 var chart = anychart.tagCloud(data.data);
 
@@ -93,12 +92,9 @@
         }
 
         async function Send(){
-            $.get("https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/" + document.getElementById('command').value +"/monthly/20151010/20201010", function(info){
-                $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/addWord?word=" + document.getElementById('command').value + "&room=" + (Cookies.get("Room")).toString() + "&view=" + info.items.views, function (data) {
+            $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/addWord?word=" + document.getElementById('command').value + "&room=" + (Cookies.get("Room")).toString(), function (data) {
                     window.location.reload();
-                })
             })
-            
         }
 
         async function Delete(){
