@@ -49,7 +49,7 @@
                 window.location.href = "cloud.html"
             }
             async function Create(){
-                $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/create?code=" + document.getElementById("CreateInput").value, function (data) {
+                $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/create?code=" + document.getElementById("CreateInput").value, function (data) {
                     Cookies.set('Room', data.room)
                     Cookies.set('adminCode', data.adminCode)
                     window.location.href = "cloud.html"
