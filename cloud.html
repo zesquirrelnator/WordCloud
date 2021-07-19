@@ -11,6 +11,7 @@
                 padding: 0;
             }
         </style>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
@@ -20,29 +21,35 @@
     <body onload="getMarkers()">
         <div id="wordCloud">
             <form autocomplete="off" onsubmit="return false">
-                <div style="padding-left: 25px; width:300px; display:table" class="form-group">
+                <br>
+                <button onClick="Leave();" type="submit" style="right: 30; z-index:9999; position:absolute"
+                class="btn btn-outline-secondary">Leave</button>
+                <div style="padding-left: 25px; width:300px; display:table" class="form-group"> 
                     <br>
-                    <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="command"
-                    placeholder="word">
-                    <button onClick="Send();" type="submit" style="z-index:9999; position:relative"
-                        class="btn btn-success">Send</button>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="command"
+                            placeholder="word">
+                            <button onClick="Send();" type="submit" style="z-index:9999; position:relative"
+                            class="btn btn-sm btn-outline-secondary">Send</button>
+                        </div>
+                    </div>
+                    
                     <br>
                     <br>
-                    <br>
-                    <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="code"
-                    placeholder="code">
-                    <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="delWord"
-                    placeholder="word">
-                    <button onClick="Delete();" type="submit" style="z-index:9999; position:relative"
-                    class="btn btn-success">Delete</button>
+                    <div class="btn-group">
+                        <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="code"
+                        placeholder="code">
+                        <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="delWord"
+                        placeholder="word">
+                        <button onClick="Delete();" type="submit" style="z-index:9999; position:relative"
+                        class="btn btn-sm btn-outline-secondary">Delete</button>
+                    </div>
+                    
                 </div>
             </form>
-            <form autocomplete="off" onsubmit="return false">
-                <div style="padding-left: 25px; width:300px; display:table" class="form-group">
-                    <button onClick="Leave();" type="submit" style="z-index:9999; position:relative"
-                    class="btn btn-success">Leave</button>
-                </div>
-            </form>
+
+            <img src="img/Lawrenceville_School_seal.png" style="z-index:9999; position:absolute; bottom: 5; right: 5; width: 100px; height: auto;">
     
             <div id="container" style="
             position: fixed;
