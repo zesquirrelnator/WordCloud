@@ -16,9 +16,10 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
         <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+        
     </head>
     
-    <body onload="getMarkers()">
+    <body onload="getMarkers();" style="background: #efefef">
         <div id="wordCloud">
             <form autocomplete="off" onsubmit="return false">
                 <br>
@@ -26,7 +27,7 @@
                 class="btn btn-outline-secondary">Leave</button>
                 <div style="padding-left: 25px; width:300px; display:table" class="form-group"> 
                     <br>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div id="AddWordId" class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <input autocomplete="off" class="form-control" style="z-index:9999; position:relative" id="command"
                             placeholder="word">
@@ -68,42 +69,44 @@
         
 
     </body>
-    <script>       
-        if(Cookies.get('Room').length == 0){
-            window.location.href = "index.html"
-        }
+    <script> 
         async function getMarkers() {
-            $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/getData?room=" + Cookies.get("Room"), await function (data) {
-                var chart = anychart.tagCloud(data.data);
+            $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/getData?room=" + Cookies.get("Room"), await function (data) {
+                if(data.status == error){
+                    window.location.href = "index.html"
+                } else{
+                    var chart = anychart.tagCloud(data.data);
 
-                chart.title('Room Number: ' + Cookies.get('Room'))
+                    chart.title('Room Number: ' + Cookies.get('Room'))
 
-                chart.angles([0, -45, 90])
+                    chart.angles([0, -45, 90])
 
-                chart.listen("pointClick", function(e){
-                var url = "https://www.google.com/search?q=" + e.point.get("x");
-                window.open(url, "_blank");
-                });
+                    chart.listen("pointClick", function(e){
+                    var url = "https://www.google.com/search?q=" + e.point.get("x");
+                    window.open(url, "_blank");
+                    });
 
-                chart.container("container");
-                chart.draw();
-                $('.anychart-credits').remove();
+                    chart.container("container");
+                    chart.draw();
+                    $('.anychart-credits').remove();
+                }
+                
             })
         }
 
         async function Send(){
-            $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/addWord?word=" + document.getElementById('command').value + "&room=" + (Cookies.get("Room")).toString(), function (data) {
+            $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/addWord?word=" + document.getElementById('command').value + "&room=" + (Cookies.get("Room")).toString(), function (data) {
                     window.location.reload();
             })
         }
 
         async function Delete(){
             if((document.getElementById('delWord').value).length != 0){
-                $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/removeWord?word=" + document.getElementById('delWord').value + "&code=" + document.getElementById('code').value + "&room=" + Cookies.get("Room"), function (data){
+                $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/removeWord?word=" + document.getElementById('delWord').value + "&code=" + document.getElementById('code').value + "&room=" + Cookies.get("Room"), function (data){
                     window.location.reload();
                 })
             } else {
-                $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/removeAllWords?code=" + document.getElementById('code').value + "&room=" + Cookies.get("Room"), function (data){
+                $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/removeAllWords?code=" + document.getElementById('code').value + "&room=" + Cookies.get("Room"), function (data){
                     window.location.reload();
                 })
             }
@@ -116,6 +119,9 @@
             window.location.href = "index.html"
         }
         
+
+
+       
     </script>
 
     
