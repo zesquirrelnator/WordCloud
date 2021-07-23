@@ -71,7 +71,7 @@
     </body>
     <script> 
         async function getMarkers() {
-            $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/getData?room=" + Cookies.get("Room"), await function (data) {
+            $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/getData?room=" + Cookies.get("Room"), await function (data) {
                     var chart = anychart.tagCloud(data.data);
 
                     chart.title('Room Number: ' + Cookies.get('Room'))
@@ -91,18 +91,18 @@
         }
 
         async function Send(){
-            $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/addWord?word=" + document.getElementById('command').value + "&room=" + (Cookies.get("Room")).toString(), function (data) {
+            $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/addWord?word=" + document.getElementById('command').value + "&room=" + (Cookies.get("Room")).toString(), function (data) {
                     window.location.reload();
             })
         }
 
         async function Delete(){
             if((document.getElementById('delWord').value).length != 0){
-                $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/removeWord?word=" + document.getElementById('delWord').value + "&code=" + document.getElementById('code').value + "&room=" + Cookies.get("Room"), function (data){
+                $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/appp/removeWord?word=" + document.getElementById('delWord').value + "&code=" + document.getElementById('code').value + "&room=" + Cookies.get("Room"), function (data){
                     window.location.reload();
                 })
             } else {
-                $.get("http://localhost:5001/wordcloud-b7391/us-central1/app/removeAllWords?code=" + document.getElementById('code').value + "&room=" + Cookies.get("Room"), function (data){
+                $.get("https://us-central1-wordcloud-b7391.cloudfunctions.net/app/removeAllWords?code=" + document.getElementById('code').value + "&room=" + Cookies.get("Room"), function (data){
                     window.location.reload();
                 })
             }
